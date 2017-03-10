@@ -84,5 +84,5 @@ take' n (x:xs) = x: take' (n-1) xs
 --c last function
 last' :: [a] -> a
 last' (x:xs)    | null xs = x
-
                 | otherwise = last xs            
+
