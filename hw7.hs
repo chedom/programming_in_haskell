@@ -70,4 +70,11 @@ altMap :: (a -> b) -> (a -> b) -> [a] -> [b]
 altMap f1 f2 [] = []
 altMap f1 f2 (x:xs) = f1 x : altMap f2 f1 xs
 
+--10 luhn algorithm using altMap
+luhnDouble :: Int -> Int
+luhnDouble n = if double <= 9 then double else double - 9
+             where double = n * 2
+
+luhn :: [Int] -> Bool
+luhn xs = (sum (altMap id luhnDouble (reverse xs))) `mod` 10 == 0
 
