@@ -53,4 +53,16 @@ curry1 f = \x -> \y -> f (x,y)
 uncurry1 :: (a -> b -> c) -> ((a, b) -> c)
 uncurry1 f =  \(x, y) -> f x y   
 
+--6  unfold func
+unfold p h t x  | p x = []
+                | otherwise = h x : unfold p h t (t x)
+
+chop8 :: [Int] -> [[Int]]
+chop8 = unfold null (take 8) (drop 8)
+
+map2 :: (a -> b) -> [a] -> [b]
+map2 f = unfold null (f . head) tail
+
+iterate2 f = unfold (\ _ -> False) id f
+
 
