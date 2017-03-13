@@ -55,4 +55,4 @@ luhnDouble n = if double <= 9 then double else double - 9
             where double = n * 2
 
 luhn :: Int -> Int -> Int -> Int -> Bool
-luhn a b c d = (luhnDouble a + luhnDouble b + luhnDouble c + luhnDouble d) `mod` 10 == 0
+luhn a b c d = (luhnDouble a + b + luhnDouble c + d) `mod` 10 == 0
