@@ -16,18 +16,33 @@ make8 :: [Bit] -> [Bit]
 make8 bits = take 8 (bits ++ repeat 0)
 
 encode :: String -> [Bit]
-encode = concat . map (make8 . int2bin . ord)
+encode = concat . map (addParityBit .  make8 . int2bin . ord)
 
-chop8 :: [Bit] -> [[Bit]]
-chop8 [] = []
-chop8 bits = take 8 bits : chop8 (drop 8 bits)
+chop9 :: [Bit] -> [[Bit]]
+chop9 [] = []
+chop9 bits = take 9 bits : chop9 (drop 9 bits)
 
 decode :: [Bit] -> String
-decode = map (chr . bin2int) . chop8
+decode = map (chr . bin2int . deleteParityBit ) . chop9
 
 transmit :: String -> String
 transmit = decode . channel . encode
 
 channel :: [Bit] -> [Bit]
-channel = id
+--channel = id
+channel = tail
+
+computeParityBit :: [Bit] -> Bit
+computeParityBit xs = sum (filter (== 1) xs) `mod` 2 
+
+addParityBit :: [Bit] -> [Bit]
+addParityBit xs = xs ++ [computeParityBit xs]
+
+checkParityBit :: [Bit] -> Bool
+checkParityBit xs = last xs == computeParityBit (take 8 xs)
+
+deleteParityBit :: [Bit] -> [Bit]
+deleteParityBit xs = if checkParityBit xs
+                        then init xs
+                        else error "Incorrect parity bit"
 
