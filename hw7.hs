@@ -37,3 +37,20 @@ filter1 p = foldr (\x acc -> case p x of
                         False -> acc             
                   ) []
 
+--filter1 p = foldr (\x xs -> if p x then x:xs else xs) []
+
+--4
+dec2int :: [Int] -> Int
+dec2int xs = foldl (\acc (elem, weight) -> acc + elem * weight) 0 (zip (reverse xs) weights)
+    where weights = iterate (*10) 1
+
+--dec2int = foldl (\x y -> 10*x + y) 0
+
+--5 define curry and uncarry functions
+curry1 :: ((a, b) -> c) -> a -> b -> c
+curry1 f = \x -> \y -> f (x,y)
+
+uncurry1 :: (a -> b -> c) -> ((a, b) -> c)
+uncurry1 f =  \(x, y) -> f x y   
+
+
