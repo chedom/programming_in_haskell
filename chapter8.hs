@@ -50,4 +50,26 @@ int2nat :: Int -> Nat
 int2nat 0 = Zero
 int2nat n = Succ (int2nat (n - 1))
 
+add2nat :: Nat -> Nat -> Nat
+add2nat Zero m = m
+add2nat (Succ n)  m = Succ (add2nat n m)
+
+data List a = Nil | Cons a (List a)
+
+len :: List a -> Int
+len Nil = 0
+len (Cons _ xs) = 1 + len xs
+
+data Tree a = Leaf a | Node (Tree a) a (Tree a)
+
+occurs :: Ord a => a -> Tree a -> Bool
+occurs x (Leaf y) = x == y
+occurs x (Node l y r)   | x == y = True
+                        | x > y = occurs x r
+                        | otherwise = occurs x l 
+
+flatten :: Tree a -> [a]
+flatten (Leaf x) = [x]
+flatten (Node l x r) = flatten l ++ [x] ++ flatten r
+
 
