@@ -16,7 +16,7 @@ mult (Succ x) y = add y (mult x y)
 
 --3
 
-data Tree a = Leaf a | Node (Tree a) (Tree a)
+data Tree a = Leaf a | Node (Tree a) (Tree a) deriving Show
 
 balanced :: Tree a -> Bool
 balanced (Leaf _) = True
@@ -26,4 +26,15 @@ number_of_leaves :: Tree a -> Int
 number_of_leaves (Leaf _) = 1
 number_of_leaves (Node l r) = number_of_leaves l + number_of_leaves r
 
+--4
+balance :: [a] -> Tree a
+balance [x] = Leaf x
+balance xs  = Node (balance l) (balance r)
+    where 
+        (l, r) = halves xs 
+
+halves :: [a] -> ([a], [a])
+halves [] = ([], [])
+halves xs = (take halve xs, drop halve xs)
+    where halve = length xs `div` 2
 
