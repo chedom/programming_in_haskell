@@ -45,3 +45,12 @@ folde :: (Int -> a) -> (a -> a -> a) -> Expr -> a
 folde f g (Add e1 e2) = g (folde f g e1) (folde f g e2)
 folde f g (Val e) = f e  
 
+--6
+eval :: Expr -> Int
+eval = folde id (+)
+
+size :: Expr -> Int
+size (Val _) = 1
+size (Add e1 e2) = size e1 + size e2
+
+
