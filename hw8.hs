@@ -63,11 +63,12 @@ instance Eq a => Eq (Maybe' a) where
 
     (/=) x y = not (x == y)
 
-instance Eq a => Eq [a] where
-    (==) [] [] = True
-    (==) (x:xs) (y:ys) = (x == y) && (xs == ys)
-    (==) _ _ = False
+--comented, because there is Eq [a] in Prelude
+--instance Eq a => Eq [a] where
+--    (==) [] [] = True
+--    (==) (x:xs) (y:ys) = (x == y) && (xs == ys)
+--    (==) _ _ = False
 
-    (/=) xs ys = not (xs == ys)
+--   (/=) xs ys = not (xs == ys)
 
 
