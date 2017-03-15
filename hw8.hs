@@ -53,4 +53,21 @@ size :: Expr -> Int
 size (Val _) = 1
 size (Add e1 e2) = size e1 + size e2
 
+--7
+data Maybe' a = Nothing' | Just' a
+instance Eq a => Eq (Maybe' a) where
+    (==) (Just' x) (Just' y) = x == y
+    (==) Nothing' (Just' _) = False
+    (==) (Just' _) Nothing' = False
+    (==) Nothing' Nothing' = True
+
+    (/=) x y = not (x == y)
+
+instance Eq a => Eq [a] where
+    (==) [] [] = True
+    (==) (x:xs) (y:ys) = (x == y) && (xs == ys)
+    (==) _ _ = False
+
+    (/=) xs ys = not (xs == ys)
+
 
