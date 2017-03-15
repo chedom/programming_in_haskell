@@ -38,3 +38,10 @@ halves [] = ([], [])
 halves xs = (take halve xs, drop halve xs)
     where halve = length xs `div` 2
 
+--5
+data Expr = Val Int | Add Expr Expr
+
+folde :: (Int -> a) -> (a -> a -> a) -> Expr -> a
+folde f g (Add e1 e2) = g (folde f g e1) (folde f g e2)
+folde f g (Val e) = f e  
+
