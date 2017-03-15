@@ -9,3 +9,4 @@ mult Zero _ = Zero
 mult _ Zero = Zero
 mult (Succ Zero) y = y
 mult (Succ x) y = add y (mult x y)
+

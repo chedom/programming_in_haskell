@@ -68,6 +68,15 @@ occurs x (Node l y r)   | x == y = True
                         | x > y = occurs x r
                         | otherwise = occurs x l 
 
+-- occurs for home work 
+occurs' :: Ord a => a -> Tree a -> Bool
+occurs' x (Leaf y) = x == y
+occurs' x (Node l y r) = case compare x y of
+                          EQ -> True
+                          LT -> occurs' x l
+                          GT -> occurs' x r
+
+
 flatten :: Tree a -> [a]
 flatten (Leaf x) = [x]
 flatten (Node l x r) = flatten l ++ [x] ++ flatten r
