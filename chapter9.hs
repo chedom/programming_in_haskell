@@ -52,6 +52,7 @@ perms (x:xs) = concat (map (interleave x) (perms xs))
 choices :: [a] -> [[a]]
 choices = concat . map perms . subs
 
+
 solution :: Expr -> [Int] -> Int -> Bool
 solution e ns n = elem (values e) (choices ns) && eval e == [n]
 
@@ -97,4 +98,22 @@ solutions' ns n =
 
 main :: IO ()
 main = print (solutions' [1,3,7,10,25,50] 765)
+
+--HW
+--1
+choices' :: [a] -> [[a]]
+choices' xs = [p | s <- subs xs, p <- perms s]
+
+--2
+isChoice :: Eq a => [a] -> [a] -> Bool
+isChoice [] _ = True
+isChoice _ [] = False
+isChoice (x:xs) ys | elem x ys = isChoice xs (removeFirstOccur x ys)
+                    | otherwise = False
+
+removeFirstOccur :: Eq a => a -> [a] -> [a]
+removeFirstOccur x [] = []
+removeFirstOccur x (y:ys)   | x == y = ys
+                            | otherwise = y : removeFirstOccur x ys 
+
 
