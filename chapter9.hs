@@ -1,22 +1,36 @@
-data Op = Add | Sub | Mul | Div
+data Op = Add | Sub | Mul | Div | Exp
 
 instance Show Op where
     show Add = "+"
     show Sub = "-"
     show Mul = "*"
     show Div = "/"
+    show Exp = "^"
 
 valid :: Op -> Int -> Int -> Bool
-valid Add x y = x <=y
+--func for chapter9
+valid Add x y = x <= y
 valid Sub x y = x > y
 valid Mul x y = x /= 1 && y /= 1 && x <= y
-valid Div x y = y /= 1 && x `mod` y == 0
+valid Div x y = y > 1 && x `mod` y == 0
+valid Exp _ y = y > 1
+
+--func for hw4
+--valid Add x y = True 
+--valid Sub x y = x > y
+--valid Mul x y = True
+--valid Div x y = x `mod` y == 0
+
+--func for hw5
+--valid Div x y = y /= 0 && x `mod` y == 0
+--valid _ _ _ = True
 
 apply :: Op -> Int -> Int -> Int
 apply Add x y = x + y
 apply Sub x y = x - y
 apply Mul x y = x * y
 apply Div x y = x `div` y
+apply Exp x y = x ^ y
 
 data Expr = Val Int | App Op Expr Expr
 instance Show Expr where
@@ -73,7 +87,7 @@ combine :: Expr -> Expr -> [Expr]
 combine l r = [App o l r | o <- ops]
 
 ops :: [Op]
-ops = [Add, Sub, Mul, Div]
+ops = [Add, Sub, Mul, Div, Exp]
 
 solutions :: [Int] -> Int -> [Expr]
 solutions ns n = [e | ns' <-choices ns, e <-exprs ns', eval e == [n]]
@@ -116,4 +130,9 @@ removeFirstOccur x [] = []
 removeFirstOccur x (y:ys)   | x == y = ys
                             | otherwise = y : removeFirstOccur x ys 
 
+--4
+countExpr :: [Int] -> Int
+countExpr ns  = length [e | ns' <-choices ns, e <-exprs ns']
+countSuccessExpr :: [Int] -> Int
+countSuccessExpr ns = length [e | ns' <-choices ns, e <-exprs ns', not (null (eval e))]
 
