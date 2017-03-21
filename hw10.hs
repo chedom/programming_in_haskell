@@ -1,3 +1,4 @@
+import System.IO
 --1
 putStr' :: String -> IO ()
 putStr' xs = sequence_ [putChar x | x <- xs]
@@ -26,4 +27,30 @@ adder' =  do putStr "How many numbers?"
 
 getTotal' :: Int -> IO [String]
 getTotal' n = sequence [getLine | _ <- [1..n]]
+
+
+--6
+getCh :: IO Char
+getCh = do  hSetEcho stdin False
+            x <- getChar
+            hSetEcho stdin True
+            return x
+
+delChar :: IO ()
+delChar = do putChar '\b'
+             putChar ' '
+             putChar '\b'
+
+getLine' :: IO String
+getLine' = getLineAux []
+getLineAux :: String -> IO String
+getLineAux xs = do ch <- getCh
+                   case ch of 
+                     '\n' -> do putChar '\n'
+                                return xs
+                     '\DEL' -> do delChar 
+                                  getLineAux (init xs)  
+                     _ -> do putChar ch
+                             getLineAux (xs ++ [ch])
+                                
 
