@@ -1,4 +1,5 @@
 import Data.Char
+
 next :: Int -> Int
 next 1 = 2
 next 2 = 1
@@ -24,11 +25,21 @@ putRow row num = do putStr (show row)
                     putStrLn (concat (replicate num "* "))
 
 putBoard :: Board -> IO ()
-putBoard [a, b, c, d, e] = do putRow 1 a
-                              putRow 2 b
-                              putRow 3 c
-                              putRow 4 d
-                              putRow 5 e
+--putBoard [a, b, c, d, e] = do putRow 1 a
+--                              putRow 2 b
+--                              putRow 3 c
+--                              putRow 4 d
+--                              putRow 5 e
+
+--hw10 2
+--putBoard b = putBoardAux (zip [1..] b)
+--putBoardAux [] = return ()
+--putBoardAux ((r, n):xs) = do putRow r n
+--                             putBoardAux xs
+--
+
+--hw10 3
+putBoard b = sequence_ [putRow r n | (r, n) <- zip [1..] b]
 
 getDigit :: String -> IO Int
 getDigit prompt = do putStr prompt
