@@ -54,7 +54,7 @@ showRow = beside . interleave bar . map showPlayer
 
 showPlayer :: Player -> [String]
 showPlayer O = ["   ", " O ", "   "]
-showPlayer B = ["   ", " B ", "   "]
+showPlayer B = ["   ", "   ", "   "]
 showPlayer X = ["   ", " X ", "   "]
 
 interleave :: a -> [a] -> [a]
